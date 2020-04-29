@@ -1,12 +1,16 @@
 import React from 'react';
 import axios from 'axios';
+import Loader from "./shared/Loader";
+import '../Login.css';
+import M from 'materialize-css';
 
 class Login extends React.Component {
 
     state = {
         username: '',
-        password: ''
-    }
+        password: '',
+        loading: false
+    };
 
     handleChange = (event) => {
         this.setState({
@@ -16,38 +20,71 @@ class Login extends React.Component {
 
     authenticate = (event) => {
         event.preventDefault();
-        this.auth()
+        this.setState({loading: true})
+        if (this.state.username === '') {
+            alert('Invalid username')
+        } else {
+            this.auth()
+        }
     }
 
-    auth = () => {
-        axios.post(`http://localhost/jwt/`, this.state)
+    async auth() {
+        await axios.post(`http://localhost/jwt/`, this.state)
             .then(response => {
                 if (response.data.status === 'success') {
                     localStorage.setItem('token', response.data.token)
                     localStorage.setItem('refresh_token', response.data.refresh_token)
                     this.props.history.push('/dashboard')
                 } else {
-                    alert("Login failed")
+                    M.toast({html: 'Login failed. Please try again', classes: 'rounded, red'});
+                    this.setState({loading: false})
                 }
             }).catch(error => {
                 console.log(error)
-        })
+            })
     }
 
     render() {
+        let loading = this.state.loading;
+        let progress = '';
+
+        if (loading === true) {
+            progress = <Loader/>
+        }
         return (
             <div>
-                <form>
-                    <input type="text"
-                           value={this.state.username}
-                           name="username"
-                           onChange={this.handleChange} /> <br />
-                    <input type="password"
-                           value={this.state.password}
-                           name="password"
-                           onChange={this.handleChange}/> <br />
-                    <button onClick={this.authenticate}>Login</button>
-                </form>
+                <div className="container login">
+                    <div className="row">
+                        <div className="col l4  offset-l4 card-panel hoverable login-wrapper">
+                            <form className="col s12">
+                                < div className="row">
+                                    <div className="col s12 center">
+                                        <img src='./virus.png' className="logo-icon"/>
+                                        <h5> Corvid - 19Tracker </h5>
+                                    </div>
+                                    <div className="input-field col s12">
+                                        <input name="username"
+                                               placeholder="Username"
+                                               value={this.state.username}
+                                               onChange={this.handleChange} />
+                                    </div>
+                                    <div className="input-field col s12">
+                                        <input type="password"
+                                               placeholder="Password"
+                                               name="password"
+                                               value={this.state.password}
+                                               onChange={this.handleChange} />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col s12">
+                                        <button className="waves-effect waves-light btn blue darken-4" onClick={this.authenticate}>Login</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
