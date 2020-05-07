@@ -1,5 +1,5 @@
 body {
-  font-weight: 300;;
+  font-weight: 400;;
 }
 header, main, footer {
   padding-left: 240px;
@@ -14,7 +14,8 @@ header, main, footer {
 }
 
 .logo-icon {
-  height: 32px; width: auto;
+  height: 32px;
+  width: auto;
 }
 
 .content { padding: 20px;}
@@ -30,5 +31,18 @@ header, main, footer {
 }
 
 .logo-icon {
-  height: 64px; width: auto;
+  height: 64px;
+  width: auto;
+}
+
+.preloader-wrapper-tiny {
+  height: 20px !important;
+  width: 20px !important;
+}
+
+/**
+Materialize overrides
+ */
+tr td {
+  padding: 2px 2px !important;
 }

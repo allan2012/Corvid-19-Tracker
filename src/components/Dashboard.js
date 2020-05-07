@@ -4,6 +4,7 @@ import axios from 'axios';
 import isAuthenticated from './shared/Auth'
 import {StartBoard} from "./shared/StatBoard";
 import {Link} from "react-router-dom";
+import CircularLoader from "./shared/CircularLoader";
 
 class Dashboard extends React.Component {
 
@@ -15,9 +16,9 @@ class Dashboard extends React.Component {
     render() {
         let loading = this.state.loading;
         const {activeItem} = this.state
-        let members_count = 'loading...';
+        let people_count = 'loading...';
         if (loading === false) {
-            members_count = this.state.data.members_count;
+            people_count = this.state.data.people_count;
         }
         return (<div>
             <Nav/>
@@ -25,25 +26,25 @@ class Dashboard extends React.Component {
                 <div className="row content">
                     <div className="col l3">
                         <div className="card-panel hoverable"><i className="material-icons large">people</i>
-                            <p>Enlisted</p>
+                            <h5>{(this.state.data.people_count === undefined) ? <CircularLoader/> : this.state.data.people_count.toLocaleString() } Enlisted</h5>
                             </div>
                         </div>
                         <div className="col l3">
                             <div className="card-panel hoverable">
                                 <i className="material-icons large">location_city</i>
-                                <p>Quarantine Centers</p>
+                                <h5>{(this.state.data.quarantine_centers_count === undefined) ? <CircularLoader/> : this.state.data.quarantine_centers_count } Quarantine Center</h5>
                             </div>
                         </div>
                         <div className="col l3">
                             <div className="card-panel hoverable">
                                 <i className="material-icons large">local_hotel</i>
-                                <p>Critical</p>
+                                <h5>{this.state.data.corvid_fatalities_count} Fatalities</h5>
                             </div>
                         </div>
                         <div className="col l3">
                             <div className="card-panel hoverable">
                                 <i className="material-icons large">sentiment_very_satisfied</i>
-                                <p>Recovered</p>
+                                <h5>{this.state.data.corvid_recovered_count} Recovered</h5>
                             </div>
                         </div>
                     </div>
@@ -95,7 +96,9 @@ class Dashboard extends React.Component {
     }
 
     async fetchData() {
-        await axios.get(`http://127.0.0.1:8000/api/summary-statistics`).then((response) => {
+        await axios.get(`${process.env.REACT_APP_API}/api/summary-statistics`, {
+           headers : {Authorization: "Bearer " + localStorage.getItem('token')}
+        }).then((response) => {
             this.setState({
                 data: response.data,
                 loading: false
