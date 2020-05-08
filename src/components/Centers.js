@@ -6,17 +6,19 @@ import PeopleFilter from "./shared/PeopleFilter";
 import Paginator from "./shared/Paginator";
 import FloatingButton from "./shared/FloatingButton";
 import PageSummaries from "./shared/PageSummaries";
+import MaterialIcon from './shared/MaterialIcon';
 
 class Centers extends React.Component
 {
     state = {
-        members: [],
+        data: [],
         first_page_url: null,
         prev_page_url: null,
         next_page_url: null,
         last_page_url: null,
         total: 0,
         loader: true,
+        page_loaded: false,
         path: `${process.env.REACT_APP_API}/api/centers`,
         current_page: 1,
     };
@@ -30,15 +32,16 @@ class Centers extends React.Component
         await axios.get(this.state.path,
             {headers : {Authorization: "Bearer " + localStorage.getItem('token')}})
             .then(response => {
+                let data = response.data;
                 this.setState({
-                    members: response.data.data,
+                    data: data.data,
                     loader: false,
-                    first_page_url: response.data.first_page_url,
-                    prev_page_url: response.data.prev_page_url,
-                    last_page_url: response.data.last_page_url,
-                    next_page_url: response.data.next_page_url,
-                    total: response.data.total,
-                    current_page: response.data.current_page
+                    first_page_url: data.first_page_url,
+                    prev_page_url: data.prev_page_url,
+                    last_page_url: data.last_page_url,
+                    next_page_url: data.next_page_url,
+                    total: data.total,
+                    current_page: data.current_page
                 });
             });
     }
@@ -57,27 +60,34 @@ class Centers extends React.Component
         }
     }
 
-    async componentDidMount() {
+    async componentDidMount()
+    {
         await this.getData();
+        this.setState({
+            page_loaded: true
+        })
     }
 
 
-    render() {
-        let loader = this.state.loader;
-        let loader_animation = (loader === true) ? <Loader/> : "";
-        let items = this.state.members.map((item, key) =>
+    render()
+    {
+        let {page_loaded,data} = this.state
+        let items = data.map((item, key) =>
             <DataColumn item={item}/>
         );
 
+        if (page_loaded === false) {
+            return <Loader />
+        }
+
         return <div>
-            <Nav/>
+            <Nav page_title='Approved Qurantine Centers'/>
             <main>
                 <div className="row">
-                    <PageSummaries />
                     <PeopleFilter />
                 </div>
-                <div className="row content">
-                    <div className="col l12">
+                <div className="row">
+                    <div className="col l5">
                         <TableGrid items={items} />
                         <Paginator
                             fetchPage={this.fetchPage}
@@ -98,12 +108,11 @@ function TableGrid(props)
         <tr>
             <th>Name</th>
             <th>Location</th>
-            <th>Description</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        {props.items}
+            {props.items}
         </tbody>
     </table>
 }
@@ -113,10 +122,9 @@ function DataColumn(props)
     return <tr key={props.item.id}>
         <td>{props.item.name}</td>
         <td>{props.item.location}</td>
-        <td>{props.item.description}</td>
         <td>
             <button className="waves-effect waves-teal btn-flat">
-                <i className="material-icons left">remove_red_eye</i>
+                <MaterialIcon icon="remove_red_eye"/>
             </button>
         </td>
     </tr>

@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Loader from "./shared/Loader";
 import Nav from "./shared/Nav";
+import {Link} from "react-router-dom"
 import PeopleFilter from "./shared/PeopleFilter";
 import Paginator from "./shared/Paginator";
 import FloatingButton from "./shared/FloatingButton";
@@ -10,7 +11,7 @@ import PageSummaries from "./shared/PageSummaries";
 class CorvidPatients extends React.Component
 {
     state = {
-        members: [],
+        patients: [],
         first_page_url: null,
         prev_page_url: null,
         next_page_url: null,
@@ -19,6 +20,7 @@ class CorvidPatients extends React.Component
         loader: true,
         path: `${process.env.REACT_APP_API}/api/people/corvid`,
         current_page: 1,
+        page_loaded: false
     };
 
     constructor(props) {
@@ -31,7 +33,7 @@ class CorvidPatients extends React.Component
             {headers : {Authorization: "Bearer " + localStorage.getItem('token')}})
             .then(response => {
                 this.setState({
-                    members: response.data.data,
+                    patients: response.data.data,
                     loader: false,
                     first_page_url: response.data.first_page_url,
                     prev_page_url: response.data.prev_page_url,
@@ -44,13 +46,16 @@ class CorvidPatients extends React.Component
     }
 
     fetchPage = pointers => {
-        if (pointers === 'NEXT' && this.state.current_page <= this.state.total) {
+        if (pointers === 'NEXT'
+            && this.state.current_page <= this.state.total)
+        {
             this.setState({
                 path: this.state.next_page_url
             }, this.getData);
         }
 
-        if (pointers === 'BACK' && this.state.current_page !== 1) {
+        if (pointers === 'BACK'
+            && this.state.current_page !== 1) {
             this.setState({
                 path: this.state.prev_page_url
             }, this.getData);
@@ -59,24 +64,31 @@ class CorvidPatients extends React.Component
 
     async componentDidMount() {
         await this.getData();
+        this.setState({
+            page_loaded: true
+        })
     }
 
 
     render() {
-        let loader = this.state.loader;
+        let {loader, patients, page_loaded} = this.state;
         let loader_animation = (loader === true) ? <Loader/> : "";
-        let items = this.state.members.map((item, key) =>
+        let items = patients.map((item, key) =>
             <DataColumn item={item}/>
         );
 
+        if (page_loaded === false) {
+            return <Loader />
+        }
+
         return <div>
-            <Nav/>
+            <Nav page_title='Corvid-19 Infected Patients'/>
             <main>
                 <div className="row">
                     <PageSummaries />
                     <PeopleFilter />
                 </div>
-                <div className="row content">
+                <div className="row">
                     <div className="col l12">
                         <TableGrid items={items} />
                         <Paginator
@@ -93,7 +105,7 @@ class CorvidPatients extends React.Component
 
 function TableGrid(props)
 {
-    return <table>
+    return <table className="highlight">
         <thead>
         <tr>
             <th>Name</th>
@@ -128,9 +140,9 @@ function DataColumn(props)
         <td>{props.item.date_of_birth}</td>
         <td>{props.item.current_corvid_state}</td>
         <td>
-            <button className="waves-effect waves-teal btn-flat">
+            <Link to={`/person/${props.item.id}`} className="waves-effect waves-teal btn-flat">
                 <i className="material-icons left">remove_red_eye</i>
-            </button>
+            </Link>
         </td>
     </tr>
 }

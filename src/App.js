@@ -6,7 +6,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import CorvidPatients from "./components/CorvidPatients";
 import Quarantined from "./components/Quarantined";
 import NoMatch from "./components/NoMatch";
-import Member from "./components/Member";
+import Person from "./components/Person";
 import Centers from "./components/Centers";
 
 class App extends React.Component {
@@ -21,7 +21,7 @@ class App extends React.Component {
               <Route path="/quarantined" component={Quarantined} exact/>
               <Route path="/centers" component={Centers} exact/>
               <Route path="/logout" component={Logout} exact/>
-              <Route path="/member/:id" component={Member} exact/>
+              <Route path="/person/:id" component={Person} exact/>
                 <Route path="*">
                     <NoMatch />
                 </Route>

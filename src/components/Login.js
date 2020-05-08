@@ -3,6 +3,7 @@ import axios from 'axios';
 import Loader from "./shared/Loader";
 import '../Login.css';
 import M from 'materialize-css';
+import jwt_decode from 'jwt-decode';
 
 class Login extends React.Component {
 
@@ -32,6 +33,8 @@ class Login extends React.Component {
         await axios.post(`${process.env.REACT_APP_API}/api/auth`, this.state)
             .then(response => {
                 if (response.data.status === 'success') {
+                    let decoded = jwt_decode(response.data.token);
+                    localStorage.setItem('names', decoded.user_data.names)
                     localStorage.setItem('token', response.data.token)
                     localStorage.setItem('refresh_token', response.data.refresh_token)
                     this.props.history.push('/dashboard')
@@ -55,7 +58,6 @@ class Login extends React.Component {
             <div>
                 <div className="container login">
                     <div className="row">
-
                         <div className="col l4  offset-l4 card-panel hoverable">
                             {progress}
                             <div className="login-wrapper">

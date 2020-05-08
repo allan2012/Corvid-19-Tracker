@@ -17,6 +17,7 @@ class Quarantined extends React.Component
         last_page_url: null,
         total: 0,
         loader: true,
+        page_loaded: false,
         path: `${process.env.REACT_APP_API}/api/people/quarantined`,
         current_page: 1,
     };
@@ -59,24 +60,29 @@ class Quarantined extends React.Component
 
     async componentDidMount() {
         await this.getData();
+        this.setState({
+            page_loaded: true
+        }, this.getData);
     }
 
 
     render() {
-        let loader = this.state.loader;
-        let loader_animation = (loader === true) ? <Loader/> : "";
+        let {page_loaded} = this.state;
         let items = this.state.members.map((item, key) =>
             <DataColumn item={item}/>
         );
 
+        if (page_loaded === false) {
+            return <Loader />
+        }
+
         return <div>
-            <Nav/>
+            <Nav page_title='Quarantined Citizens'/>
             <main>
                 <div className="row">
-                    <PageSummaries />
                     <PeopleFilter />
                 </div>
-                <div className="row content">
+                <div className="row">
                     <div className="col l12">
                         <TableGrid items={items} />
                         <Paginator
@@ -93,7 +99,7 @@ class Quarantined extends React.Component
 
 function TableGrid(props)
 {
-    return <table>
+    return <table className="highlight">
         <thead>
         <tr>
             <th>Name</th>

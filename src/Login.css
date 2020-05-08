@@ -1,7 +1,13 @@
 .login {
     margin-top: 12%;
+
 }
 
 .login-wrapper {
-    padding: 25px !important;
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+}
+
+.dashboard-material-icon {
+    font-size: 50px !important;
 }

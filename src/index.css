@@ -1,6 +1,9 @@
 body {
-  font-weight: 400;;
+  font-weight: 300 !important;
+  font-family: Lato !important;
+  font-size: 16px !important;
 }
+
 header, main, footer {
   padding-left: 240px;
 }
@@ -18,7 +21,7 @@ header, main, footer {
   width: auto;
 }
 
-.content { padding: 20px;}
+.content { padding: 30px;}
 
 @media only screen and (max-width : 992px) {
   header, main, footer {
@@ -40,9 +43,39 @@ header, main, footer {
   width: 20px !important;
 }
 
+.page-title {
+  font-weight: 300;
+  font-size: 18px;
+  margin-left: 20px;
+}
+
 /**
 Materialize overrides
  */
 tr td {
   padding: 2px 2px !important;
+}
+
+.regular-td-padding{
+  padding: 15px 15px !important;
+}
+
+.progress {
+  margin-top: 0px !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.line-graph { height: 400px; }
+
+
+.logo-text { font-size: 32px; padding: 20px;}
+
+.dashboard-summary { padding-top: 50px !important;}
+
+.standard-custom-header { padding: 10px !important;}
+
+h1 h2 h3 h4 h5 h6 { 
+  font-family: 'Kanit' !important;
+  font-weight: 500;
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '../node_modules/materialize-css/dist/css/materialize.min.css';
 import './index.css';
+import '../node_modules/react-vis/dist/style.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
