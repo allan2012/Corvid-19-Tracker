@@ -1,6 +1,6 @@
 body {
   font-weight: 300 !important;
-  font-family: Lato !important;
+  font-family: Lato;
   font-size: 16px !important;
 }
 
@@ -66,14 +66,23 @@ tr td {
   margin-right: 0px !important;
 }
 
-.line-graph { height: 400px; }
+.line-graph { 
+  height: 400px; 
+}
 
 
-.logo-text { font-size: 32px; padding: 20px;}
+.logo-text { 
+  font-size: 32px; 
+  padding: 20px;
+}
 
-.dashboard-summary { padding-top: 50px !important;}
+.dashboard-summary { 
+  padding-top: 50px !important;
+}
 
-.standard-custom-header { padding: 10px !important;}
+.standard-custom-header { 
+  padding: 10px !important;
+}
 
 h1 h2 h3 h4 h5 h6 { 
   font-family: 'Kanit' !important;

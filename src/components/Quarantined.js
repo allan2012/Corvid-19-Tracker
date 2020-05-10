@@ -5,10 +5,12 @@ import Nav from "./shared/Nav";
 import PeopleFilter from "./shared/PeopleFilter";
 import Paginator from "./shared/Paginator";
 import FloatingButton from "./shared/FloatingButton";
-import PageSummaries from "./shared/PageSummaries";
+import TableHeader from './shared/TableHeader';
+import TableRow from './shared/TableRow';
+import MaterialIcon from './shared/MaterialIcon';
+import { Link } from "react-router-dom"
 
-class Quarantined extends React.Component
-{
+class Quarantined extends React.Component {
     state = {
         members: [],
         first_page_url: null,
@@ -27,9 +29,9 @@ class Quarantined extends React.Component
     }
 
     async getData() {
-        this.setState({loader: true});
+        this.setState({ loader: true });
         await axios.get(this.state.path,
-            {headers : {Authorization: "Bearer " + localStorage.getItem('token')}})
+            { headers: { Authorization: "Bearer " + localStorage.getItem('token') } })
             .then(response => {
                 this.setState({
                     members: response.data.data,
@@ -67,9 +69,27 @@ class Quarantined extends React.Component
 
 
     render() {
-        let {page_loaded} = this.state;
+        let { page_loaded } = this.state;
         let items = this.state.members.map((item, key) =>
-            <DataColumn item={item}/>
+            <TableRow
+                column_values={[
+                    `
+                    ${item.first_name} 
+                    ${item.surname} 
+                    ${item.last_name}`,
+                    item.sex,
+                    item.phone,
+                    item.national_id,
+                    item.occupation,
+                    item.date_of_birth,
+                    item.current_corvid_state,
+                    <Link
+                        to={`/person/${item.id}`}
+                        className="waves-effect waves-teal btn-flat">
+                        <MaterialIcon icon="remove_red_eye" />
+                    </Link>
+                ]}
+            />
         );
 
         if (page_loaded === false) {
@@ -77,7 +97,7 @@ class Quarantined extends React.Component
         }
 
         return <div>
-            <Nav page_title='Quarantined Citizens'/>
+            <Nav page_title='Quarantined Citizens' />
             <main>
                 <div className="row">
                     <PeopleFilter />
@@ -92,53 +112,28 @@ class Quarantined extends React.Component
                     </div>
                 </div>
             </main>
-            <FloatingButton/>
+            <FloatingButton />
         </div>
     }
 }
 
-function TableGrid(props)
-{
+const TableGrid = (props) => {
     return <table className="highlight">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Sex</th>
-            <th>Phone</th>
-            <th>ID/Passport</th>
-            <th>Occupation</th>
-            <th>Date of Birth</th>
-            <th>Health State</th>
-            <th></th>
-        </tr>
-        </thead>
+        <TableHeader
+            column_titles={[
+                'Name', 'Sex',
+                'Phone',
+                'ID/Passport',
+                'Occupation',
+                'Date of Birth',
+                'Health State',
+                ''
+            ]}
+        />
         <tbody>
-        {props.items}
+            {props.items}
         </tbody>
     </table>
-}
-
-function DataColumn(props)
-{
-    return <tr key={props.item.id}>
-        <td>{`
-            ${props.item.first_name} 
-            ${props.item.surname} 
-            ${props.item.last_name}`
-        }
-        </td>
-        <td>{props.item.sex}</td>
-        <td>{props.item.phone}</td>
-        <td>{props.item.national_id}</td>
-        <td>{props.item.occupation}</td>
-        <td>{props.item.date_of_birth}</td>
-        <td>{props.item.current_corvid_state}</td>
-        <td>
-            <button className="waves-effect waves-teal btn-flat">
-                <i className="material-icons left">remove_red_eye</i>
-            </button>
-        </td>
-    </tr>
 }
 
 export default Quarantined;

@@ -9,16 +9,12 @@ class Dashboard extends React.Component {
 
     state = {
         data: {},
-        loading: true,
         page_loaded: false
     };
 
     render() {
-        let { loading, page_loaded, data } = this.state;
+        let { page_loaded, data } = this.state;
         let people_count = 'loading...';
-        if (loading === false) {
-            people_count = this.state.data.people_count;
-        }
 
         if (page_loaded === false) {
             return <Loader />
@@ -56,7 +52,9 @@ class Dashboard extends React.Component {
                     <div className="col l12 content dashboard-summary">
                         <div className="col l4 content">
                             <ul className="collection with-header">
-                                <li className="collection-header"><h5>Infected Count Summary</h5></li>
+                                <li className="collection-header">
+                                    <h5>Infected Count Summary</h5>
+                                </li>
                                 <Enlisted text='Cofirmed' color='red' scalar='334' />
                                 <Enlisted text='Recovered' scalar='856' />
                                 <Enlisted text='Tracked' scalar='7,856' />
@@ -65,20 +63,24 @@ class Dashboard extends React.Component {
                         </div>
                         <div className="col l4 content">
                             <ul className="collection with-header">
-                                <li className="collection-header"><h5>Infected Demographics</h5></li>
-                                <li className="collection-item"><div>Female<a href="#!" className="secondary-content">34%</a></div></li>
-                                <li className="collection-item"><div>Male<a href="#!" className="secondary-content">66%</a></div></li>
-                                <li className="collection-item"><div>60 and above<a href="#!" className="secondary-content">14%</a></div></li>
-                                <li className="collection-item"><div>Children Below 5<a href="#!" className="secondary-content">0.113%</a></div></li>
+                                <li className="collection-header">
+                                    <h5>Infected Demographics</h5>
+                                </li>
+                                <Enlisted text="Female" scalar='34%' />
+                                <Enlisted text="Male" scalar='66%' />
+                                <Enlisted text="60 and above" scalar='14%' />
+                                <Enlisted text="Children below 5" scalar='0.113%' />
                             </ul>
                         </div>
                         <div className="col l4 content">
                             <ul className="collection with-header">
-                                <li className="collection-header"><h5>Top Counties</h5></li>
-                                <li className="collection-item"><div>Nairobi<a href="#!" className="secondary-content">679</a></div></li>
-                                <li className="collection-item"><div>Mombasa<a href="#!" className="secondary-content">500</a></div></li>
-                                <li className="collection-item"><div>Kisumu<a href="#!" className="secondary-content">342</a></div></li>
-                                <li className="collection-item"><div>Nakuru<a href="#!" className="secondary-content">102</a></div></li>
+                                <li className="collection-header">
+                                    <h5>Top Counties</h5>
+                                </li>
+                                <Enlisted text="Nairobi" scalar={679} />
+                                <Enlisted text="Mombasa" scalar={500} />
+                                <Enlisted text="Kisumu" scalar={342} />
+                                <Enlisted text="Nakuru" scalar={102} />
                             </ul>
                         </div>
                     </div>
@@ -94,7 +96,8 @@ class Dashboard extends React.Component {
 
     async fetchData() {
         await axios.get(`${process.env.REACT_APP_API}/api/summary-statistics`, {
-            headers: { Authorization: "Bearer " + localStorage.getItem('token') }
+            headers: { Authorization: 
+                "Bearer " + localStorage.getItem('token') }
         }).then((response) => {
             this.setState({
                 data: response.data,
@@ -114,12 +117,12 @@ class Dashboard extends React.Component {
     }
 }
 
-function Enlisted(props) {
+const Enlisted = (props) => {
     return <li className="collection-item">
             <div>{props.text}<a href="#!" 
             className="secondary-content">
-                <span class={`new badge ${props.color}`} 
-                data-badge-caption="">{props.scalar}</span></a>
+                {props.scalar}
+                </a>
             </div>
         </li>
 }
