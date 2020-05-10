@@ -1,5 +1,5 @@
 import React from 'react';
-import {useParams} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 import axios from 'axios';
 import Nav from "./shared/Nav";
 import Loader from "./shared/Loader";
@@ -95,6 +95,12 @@ class Person extends React.Component
                             <tr>
                                 <td>Notes</td>
                                 <td>{this.state.person.notes}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <Link className="btn" to={`/person-form/${this.state.person.id}`}>Edit</Link>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

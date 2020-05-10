@@ -29,6 +29,10 @@ header, main, footer {
   }
 }
 
+.custom_table tr{
+  border-bottom: none;
+}
+
 .custom-logo {
   margin-left: 30px;
 }
