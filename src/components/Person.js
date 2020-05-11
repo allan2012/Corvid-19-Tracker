@@ -3,6 +3,7 @@ import {useParams, Link} from "react-router-dom";
 import axios from 'axios';
 import Nav from "./shared/Nav";
 import Loader from "./shared/Loader";
+import MaterialIcon from "./shared/MaterialIcon"
 
 class Person extends React.Component
 {
@@ -44,12 +45,12 @@ class Person extends React.Component
             <Nav page_title={`Person ID: ${this.state.person.id}`}/>
             <main>
                 <div className="row content">
-                    <div className="col l4">
+                    <div className="col l8">
                         <h5>{this.state.person.first_name} {this.state.person.surname}</h5>
                         <table className='highlight'>
                             <tbody>
                             <tr>
-                                <td style={{width: '250px'}}>Date Of Birth</td>
+                                <td style={{width: '400px'}}>Date Of Birth</td>
                                 <td>{this.state.person.date_of_birth}</td>
                             </tr>
                             <tr>
@@ -84,22 +85,23 @@ class Person extends React.Component
                                 <td>Contact Phone</td>
                                 <td>{this.state.person.contact_phone}</td>
                             </tr>
-                            <tr>
-                                <td>Contact Relation</td>
-                                <td>{this.state.person.contact_relation}</td>
-                            </tr>
-                            <tr>
-                                <td>Physical Address</td>
-                                <td>{this.state.person.physical_address}</td>
-                            </tr>
-                            <tr>
-                                <td>Notes</td>
-                                <td>{this.state.person.notes}</td>
-                            </tr>
+                            <PersonTableRow 
+                                label="Contact Relation" 
+                                value={this.state.person.contact_relation} 
+                            />
+                            <PersonTableRow 
+                                label="Physical Address" 
+                                value={this.state.person.physical_address} 
+                            />
+                            <PersonTableRow 
+                                label="Notes" 
+                                value={this.state.person.notes} 
+                            />
                             <tr>
                                 <td></td>
                                 <td>
-                                    <Link className="btn" to={`/person-form/${this.state.person.id}`}>Edit</Link>
+                                    <Link className="btn-small" to={`/person-form/${this.state.person.id}`}><MaterialIcon icon="create" /></Link> 
+                                    <button class="waves-effect waves-light btn-small red"> <MaterialIcon icon="delete_forever" /></button>
                                 </td>
                             </tr>
                             </tbody>
@@ -109,6 +111,14 @@ class Person extends React.Component
             </main>
         </div>
     }
+}
+
+
+const PersonTableRow = (props) => {
+    return  <tr>
+            <td>{props.label}</td>
+            <td>{props.value}</td>
+        </tr>
 }
 
 export default Person;

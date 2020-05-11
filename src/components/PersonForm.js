@@ -271,6 +271,7 @@ class PersonForm extends React.Component
                                 <td>Notes</td>
                                 <td>
                                     <textarea 
+                                        class="materialize-textarea"
                                         name="notes" 
                                         onChange={this.handleChange} 
                                     >

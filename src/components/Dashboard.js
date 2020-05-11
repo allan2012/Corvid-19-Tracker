@@ -3,7 +3,7 @@ import Nav from "./shared/Nav";
 import axios from 'axios';
 import isAuthenticated from './shared/Auth'
 import Loader from "./shared/Loader";
-import { XYPlot, LineSeries, XAxis, YAxis} from 'react-vis';
+import { XYPlot, LineSeries, XAxis, YAxis } from 'react-vis';
 
 class Dashboard extends React.Component {
 
@@ -21,19 +21,19 @@ class Dashboard extends React.Component {
         }
 
         const data_ = [
-            {x: 20, y: 9},
-            {x: 21, y: 5},
-            {x: 22, y: 10},
-            {x: 23, y: 44},
-            {x: 24, y: 56},
-            {x: 25, y: 23},
-            {x: 26, y: 22},
-            {x: 27, y: 3},
-            {x: 28, y: 2},
-            {x: 29, y: 0},
-            {x: 30, y: 44},
-            {x: 31, y: 12}
-          ];
+            { x: 20, y: 9 },
+            { x: 21, y: 5 },
+            { x: 22, y: 10 },
+            { x: 23, y: 44 },
+            { x: 24, y: 56 },
+            { x: 25, y: 23 },
+            { x: 26, y: 22 },
+            { x: 27, y: 3 },
+            { x: 28, y: 2 },
+            { x: 29, y: 0 },
+            { x: 30, y: 44 },
+            { x: 31, y: 12 }
+        ];
 
         return (<div>
             <Nav page_title='Dashboard' />
@@ -41,11 +41,11 @@ class Dashboard extends React.Component {
                 <div className="row content">
                     <div className="col l12">
                         <h5 className='standard-custom-header'>Infection trend last 30 Days</h5>
-                        <XYPlot 
-                            height={300} 
+                        <XYPlot
+                            height={300}
                             width={1000}>
-                                <XAxis />
-                                <YAxis />
+                            <XAxis />
+                            <YAxis />
                             <LineSeries data={data_} />
                         </XYPlot>
                     </div>
@@ -96,8 +96,10 @@ class Dashboard extends React.Component {
 
     async fetchData() {
         await axios.get(`${process.env.REACT_APP_API}/api/summary-statistics`, {
-            headers: { Authorization: 
-                "Bearer " + localStorage.getItem('token') }
+            headers: {
+                Authorization:
+                    "Bearer " + localStorage.getItem('token')
+            }
         }).then((response) => {
             this.setState({
                 data: response.data,
@@ -119,12 +121,12 @@ class Dashboard extends React.Component {
 
 const Enlisted = (props) => {
     return <li className="collection-item">
-            <div>{props.text}<a href="#!" 
+        <div>{props.text}<a href="#!"
             className="secondary-content">
-                {props.scalar}
-                </a>
-            </div>
-        </li>
+            {props.scalar}
+        </a>
+        </div>
+    </li>
 }
 
 export default Dashboard;

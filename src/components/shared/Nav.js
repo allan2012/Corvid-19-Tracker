@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import M from 'materialize-css';
+import MaterialIcon from '../shared/MaterialIcon'
 
 class Nav extends React.Component {
 
@@ -22,7 +23,8 @@ class Nav extends React.Component {
                 <li><a href="#!"><i className="material-icons">folder_open</i>Reports</a></li>
             </ul>
             <ul id="dropdown1" className="dropdown-content">
-                <li><a href="#!"><i className="material-icons">person_outline</i> Profile</a></li>
+                <li><a href="#modal1" className="modal-trigger">
+                    <i className="material-icons">person_outline</i> Profile</a></li>
                 <li><a href="#!"><i className="material-icons">settings</i> Settings</a></li>
                 <li className="divider"></li>
                 <li><Link to="/logout"><i className="material-icons">exit_to_app</i> Logout</Link></li>
@@ -38,6 +40,28 @@ class Nav extends React.Component {
                     </ul>
                 </div>
             </nav>
+
+            <div id="modal1" class="modal" style={{width: '400px'}}>
+                <div class="modal-content">
+                    <h5>{localStorage.getItem('names')}</h5>
+                    <p>
+                        <MaterialIcon icon="email" size="tiny" /> allan.koskei@gmail.com
+                    </p>
+                    <p>
+                        <MaterialIcon icon="phone" size="tiny" />+254711900788
+                    </p>
+                    <p>
+                        <MaterialIcon icon="perm_contact_calendar" size="tiny" /> Date registered: 14th May 2020
+                    </p>
+                    <p>
+                        <MaterialIcon icon="account_circle" size="tiny" /> Role: Data Clerk
+                    </p>
+                    
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                </div>
+            </div>
         </header>)
     }
 }
