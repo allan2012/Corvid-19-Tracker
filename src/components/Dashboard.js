@@ -13,8 +13,7 @@ class Dashboard extends React.Component {
     };
 
     render() {
-        let { page_loaded, data } = this.state;
-        let people_count = 'loading...';
+        let { page_loaded } = this.state;
 
         if (page_loaded === false) {
             return <Loader />

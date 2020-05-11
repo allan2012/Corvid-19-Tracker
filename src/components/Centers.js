@@ -23,15 +23,15 @@ class Centers extends React.Component {
         current_page: 1,
     };
 
-    constructor(props) {
-        super(props);
-    }
-
     async getData() {
         this.setState({ loader: true });
         await axios.get(this.state.path,
-            { headers: { Authorization: 
-                "Bearer " + localStorage.getItem('token') } })
+            {
+                headers: {
+                    Authorization:
+                        "Bearer " + localStorage.getItem('token')
+                }
+            })
             .then(response => {
                 let data = response.data;
                 this.setState({

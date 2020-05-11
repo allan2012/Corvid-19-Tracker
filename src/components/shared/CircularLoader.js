@@ -1,7 +1,6 @@
 import React from 'react';
 
-export default function CircularLoader(props)
-{
+export default function CircularLoader(props) {
     return <div className="preloader-wrapper small active preloader-wrapper-tiny">
         <div className="spinner-layer spinner-blue-only">
             <div className="circle-clipper left">

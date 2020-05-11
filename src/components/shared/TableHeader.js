@@ -2,7 +2,7 @@ import React from 'react'
 
 const TableHeader = (props) => {
 
-    let items = props.column_titles.map(item => 
+    let items = props.column_titles.map(item =>
         <th>{item}</th>
     )
 

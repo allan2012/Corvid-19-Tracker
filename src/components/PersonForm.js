@@ -5,8 +5,7 @@ import Nav from "./shared/Nav";
 import Loader from "./shared/Loader";
 import M from 'materialize-css';
 
-class PersonForm extends React.Component 
-{
+class PersonForm extends React.Component {
 
     state = {
         first_name: '',
@@ -69,18 +68,20 @@ class PersonForm extends React.Component
     }
 
     async save() {
-        await axios.patch(`${process.env.REACT_APP_API}/api/people/${this.state.id}`, 
-        this.state, {
-            headers: { Authorization: 
-                "Bearer " + localStorage.getItem('token') }
+        await axios.patch(`${process.env.REACT_APP_API}/api/people/${this.state.id}`,
+            this.state, {
+            headers: {
+                Authorization:
+                    "Bearer " + localStorage.getItem('token')
+            }
         }).then(response => {
             if (response.data.status === 'success') {
-                M.toast({html: 'Person saved successfully', classes: 'rounded, green'});
+                M.toast({ html: 'Person saved successfully', classes: 'rounded, green' });
             } else {
-                M.toast({html: 'Error saving', classes: 'rounded, red'});
+                M.toast({ html: 'Error saving', classes: 'rounded, red' });
             }
         }).catch(error => {
-            M.toast({html: 'Error saving data', classes: 'rounded, red'});
+            M.toast({ html: 'Error saving data', classes: 'rounded, red' });
         })
     }
 
@@ -104,7 +105,7 @@ class PersonForm extends React.Component
             <Nav page_title={`Person ID: ${this.state.id}`} />
             <main>
                 <div className="row container content">
-                    <div className="col l12">  
+                    <div className="col l12">
                         <h5>{this.state.first_name} {this.state.surname}</h5>
                     </div>
                     <div className="col l6">
@@ -121,60 +122,64 @@ class PersonForm extends React.Component
                             <tr>
                                 <td>Surname</td>
                                 <td>
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         name="surname"
-                                        value={this.state.surname} 
+                                        value={this.state.surname}
                                         onChange={this.handleChange}
                                     />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Last Name</td>
-                                <td> 
-                                    <input 
-                                        type="text" 
+                                <td>
+                                    <input
+                                        type="text"
                                         name="last_name"
-                                        value={this.state.last_name} 
-                                        onChange={this.handleChange} 
+                                        value={this.state.last_name}
+                                        onChange={this.handleChange}
                                     />
                                 </td>
                             </tr>
                             <tr>
                                 <td style={{ width: '250px' }}>Date Of Birth</td>
-                                <td>        
-                                    <input type="date" onChange={this.handleChange} value={this.state.date_of_birth} ></input>
+                                <td>
+                                    <input
+                                        type="date"
+                                        onChange={this.handleChange}
+                                        value={this.state.date_of_birth}
+                                    />
                                 </td>
                             </tr>
                             <tr>
                                 <td>ID/Passport</td>
                                 <td>
-                                    <input 
-                                        type="text" 
-                                        name="national_id" 
-                                        value={this.state.national_id} 
-                                        onChange={this.handleChange} 
+                                    <input
+                                        type="text"
+                                        name="national_id"
+                                        value={this.state.national_id}
+                                        onChange={this.handleChange}
                                     />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Email Address</td>
                                 <td>
-                                <input 
-                                        type="text" 
-                                        name="email" 
-                                        value={this.state.email} 
-                                        onChange={this.handleChange} 
+                                    <input
+                                        type="text"
+                                        name="email"
+                                        value={this.state.email}
+                                        onChange={this.handleChange}
                                     />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Gender</td>
                                 <td>
-                                    <select 
-                                        name='sex' 
-                                        onChange={this.handleChange} 
-                                        >
+                                    <select
+                                        name='sex'
+                                        onChange={this.handleChange}
+                                    >
                                         <option>Select gender</option>
                                         <option value='M' selected={this.state.sex === 'M'}>Male</option>
                                         <option value='F' selected={this.state.sex === 'F'}>Female</option>
@@ -188,10 +193,10 @@ class PersonForm extends React.Component
                             <tr>
                                 <td>Phone</td>
                                 <td>
-                                    <input 
+                                    <input
                                         name="phone"
-                                        type="text" 
-                                        value={this.state.phone} 
+                                        type="text"
+                                        value={this.state.phone}
                                         onChange={this.handleChange}
                                     />
                                 </td>
@@ -199,10 +204,10 @@ class PersonForm extends React.Component
                             <tr>
                                 <td>Confirmed Corvid-19 Infection</td>
                                 <td>
-                                    <select 
-                                        name='confirmed_corvid' 
-                                        onChange={this.handleChange} 
-                                        >
+                                    <select
+                                        name='confirmed_corvid'
+                                        onChange={this.handleChange}
+                                    >
                                         <option>Select corvid</option>
                                         <option value='0' selected={this.state.confirmed_corvid === 0}>NO</option>
                                         <option value='1' selected={this.state.confirmed_corvid === 1}>YES</option>
@@ -212,43 +217,43 @@ class PersonForm extends React.Component
                             <tr>
                                 <td>Occupation/Profession</td>
                                 <td>
-                                    <input 
+                                    <input
                                         name="occupation"
-                                        type="text" 
-                                        value={this.state.occupation} 
-                                        onChange={this.handleChange} 
+                                        type="text"
+                                        value={this.state.occupation}
+                                        onChange={this.handleChange}
                                     />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Contact Name</td>
                                 <td>
-                                    <input 
+                                    <input
                                         name="contact_names"
-                                        type="text" 
+                                        type="text"
                                         value={this.state.contact_names}
-                                        onChange={this.handleChange} 
-                                     />
-                                     </td>
+                                        onChange={this.handleChange}
+                                    />
+                                </td>
                             </tr>
                             <tr>
                                 <td>Contact Phone</td>
                                 <td>
-                                    <input 
+                                    <input
                                         name="contact_phone"
-                                        type="text" 
+                                        type="text"
                                         value={this.state.contact_phone}
-                                        onChange={this.handleChange} 
-                                     />
+                                        onChange={this.handleChange}
+                                    />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Contact Relation</td>
                                 <td>
-                                    <select 
-                                        name='contact_relation' 
-                                        onChange={this.handleChange} 
-                                        >
+                                    <select
+                                        name='contact_relation'
+                                        onChange={this.handleChange}
+                                    >
                                         <option>Select relation</option>
                                         <option value='PARENT' selected={this.state.contact_relation === 'PARENT'}>PARENT</option>
                                         <option value='GUARDIAN' selected={this.state.contact_relation === 'GUARDIAN'}>GUARDIAN</option>
@@ -260,29 +265,29 @@ class PersonForm extends React.Component
                             </tr>
                             <tr>
                                 <td>Physical Address</td>
-                                <td><input 
-                                        name='physical_address'
-                                        type="text" 
-                                        value={this.state.physical_address} 
-                                        onChange={this.handleChange}
-                                    /></td>
+                                <td><input
+                                    name='physical_address'
+                                    type="text"
+                                    value={this.state.physical_address}
+                                    onChange={this.handleChange}
+                                /></td>
                             </tr>
                             <tr>
                                 <td>Notes</td>
                                 <td>
-                                    <textarea 
+                                    <textarea
                                         class="materialize-textarea"
-                                        name="notes" 
-                                        onChange={this.handleChange} 
+                                        name="notes"
+                                        onChange={this.handleChange}
                                     >
-                                            {this.state.notes}
+                                        {this.state.notes}
                                     </textarea>
                                 </td>
                             </tr>
                         </table>
                     </div>
-                    <button 
-                        className="btn" 
+                    <button
+                        className="btn"
                         onClick={this.savePersonData}>Save</button>
                 </div>
             </main>

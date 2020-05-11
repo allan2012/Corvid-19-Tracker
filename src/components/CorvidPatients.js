@@ -24,16 +24,14 @@ class CorvidPatients extends React.Component {
         page_loaded: false
     };
 
-    constructor(props) {
-        super(props);
-    }
-
     async getData() {
         this.setState({ loader: true });
         await axios.get(this.state.path,
-            { headers: { 
-                Authorization: "Bearer " + localStorage.getItem('token') 
-            } }).then(response => {
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('token')
+                }
+            }).then(response => {
                 this.setState({
                     patients: response.data.data,
                     first_page_url: response.data.first_page_url,
