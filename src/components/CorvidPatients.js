@@ -6,7 +6,6 @@ import { Link } from "react-router-dom"
 import PeopleFilter from "./shared/PeopleFilter";
 import Paginator from "./shared/Paginator";
 import FloatingButton from "./shared/FloatingButton";
-import PageSummaries from "./shared/PageSummaries";
 import TableHeader from "./shared/TableHeader"
 import TableRow from './shared/TableRow';
 import MaterialIcon from './shared/MaterialIcon';
@@ -19,15 +18,31 @@ class CorvidPatients extends React.Component {
         next_page_url: null,
         last_page_url: null,
         total: 0,
-        path: `${process.env.REACT_APP_API}/api/people/corvid`,
+        path: `${process.env.REACT_APP_API}/api/people/corvid?page=1`,
         current_page: 1,
-        page_loaded: false
+        page_loaded: false,
+        health_state: null,
+        q: null
     };
 
     async getData() {
         this.setState({ loader: true });
-        await axios.get(this.state.path,
-            {
+        let query_filter = '';
+        let filter = false;
+
+        if (this.state.health_state !== null) {
+            query_filter = `&health_state=${this.state.health_state}`;
+            filter = true;
+        }
+
+        if (this.state.q !== null) {
+            query_filter = query_filter + `&q=${this.state.q}`;
+            filter = true;
+        }
+
+        let URL = `${this.state.path}${query_filter}`;
+
+        await axios.get(URL,{
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('token')
                 }
@@ -42,6 +57,16 @@ class CorvidPatients extends React.Component {
                     current_page: response.data.current_page
                 });
             });
+    }
+
+    filterData = () => {
+        this.getData();
+    }
+
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
     }
 
     fetchPage = pointers => {
@@ -100,8 +125,10 @@ class CorvidPatients extends React.Component {
             <Nav page_title='Corvid-19 Infected Patients' />
             <main>
                 <div className="row">
-                    <PageSummaries />
-                    <PeopleFilter />
+                    <PeopleFilter 
+                        search_function={this.filterData} 
+                        handle_change={this.handleChange} 
+                    />
                 </div>
                 <div className="row">
                     <div className="col l12">

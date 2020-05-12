@@ -4,23 +4,27 @@ export default function Paginator(props)
 {
     return <ul className="pagination">
         <li className="disabled">
-            <a onClick={()=>props.fetchPage('BACK')}>
+            <button 
+                className="waves-effect waves-teal btn-flat" 
+                onClick={()=>props.fetchPage('BACK')}>
                 <i className="material-icons">
                     chevron_left
                 </i>
-            </a>
+            </button>
         </li>
-        <li className="active blue button">
+        <li className="btn-flat">
             <a href="#!">
                 {props.current_page}
             </a>
         </li>
         <li className="waves-effect">
-            <a onClick={()=>props.fetchPage('NEXT')}>
+            <button 
+                className="waves-effect waves-teal btn-flat" 
+                onClick={()=>props.fetchPage('NEXT')}>
                 <i className="material-icons">
                     chevron_right
                 </i>
-            </a>
+            </button>
         </li>
     </ul>
 }

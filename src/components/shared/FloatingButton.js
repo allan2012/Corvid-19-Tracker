@@ -1,9 +1,11 @@
 import React from "react";
 
-export default function FloatingButton () {
+const FloatingButton = () => {
     return <div className="fixed-action-btn">
-        <a className="btn-floating blue">
+        <button className="btn-floating blue">
             <i className="large material-icons">add</i>
-        </a>
+        </button>
     </div>
 }
+
+export default FloatingButton;

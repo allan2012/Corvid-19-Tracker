@@ -54,9 +54,7 @@ class Login extends React.Component {
         if (loading === true) {
             progress = <Loader />
         }
-        return (
-            <div>
-                <div className="container login">
+        return (<div className="container login">
                     <div className="row">
                         <div className="col l4  offset-l4 card-panel hoverable">
                             {progress}
@@ -92,7 +90,6 @@ class Login extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
         )
     }
 }

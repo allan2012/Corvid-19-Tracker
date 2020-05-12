@@ -1,20 +1,16 @@
 import React from 'react';
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import Nav from "./shared/Nav";
 import Loader from "./shared/Loader";
 import MaterialIcon from "./shared/MaterialIcon"
 
 class Person extends React.Component {
-    
+
     state = {
         person: {},
         page_loaded: false
     };
-
-    constructor(props) {
-        super(props);
-    }
 
     async getPersonData() {
         const { id } = this.props.match.params;
@@ -69,39 +65,18 @@ class Person extends React.Component {
                                     <td>Phone</td>
                                     <td>{this.state.person.phone}</td>
                                 </tr>
-                                <tr>
-                                    <td>Confirmed Corvid-19 Infection</td>
-                                    <td>{(this.state.person.corvid_confirmed === true) ? 'YES' : 'NO'}</td>
-                                </tr>
-                                <tr>
-                                    <td>Occupation/Profession</td>
-                                    <td>{this.state.person.occupation}</td>
-                                </tr>
-                                <tr>
-                                    <td>Contact Name</td>
-                                    <td>{this.state.person.contact_names}</td>
-                                </tr>
-                                <tr>
-                                    <td>Contact Phone</td>
-                                    <td>{this.state.person.contact_phone}</td>
-                                </tr>
-                                <PersonTableRow
-                                    label="Contact Relation"
-                                    value={this.state.person.contact_relation}
-                                />
-                                <PersonTableRow
-                                    label="Physical Address"
-                                    value={this.state.person.physical_address}
-                                />
-                                <PersonTableRow
-                                    label="Notes"
-                                    value={this.state.person.notes}
-                                />
+                                <PersonTableRow label="Confirmed Corvid-19 Infection" value={this.state.person.corvid_confirmed} />
+                                <PersonTableRow label="Occupation/Profession" value={this.state.person.occupation} />
+                                <PersonTableRow label="Contact Name" value={this.state.person.contact_names} />
+                                <PersonTableRow label="Contact Phone" value={this.state.person.contact_phone} />
+                                <PersonTableRow label="Contact Relation" value={this.state.person.contact_relation} />
+                                <PersonTableRow label="Physical Address" value={this.state.person.physical_address} />
+                                <PersonTableRow label="Notes" value={this.state.person.notes} />
                                 <tr>
                                     <td></td>
                                     <td>
                                         <Link className="btn-small" to={`/person-form/${this.state.person.id}`}><MaterialIcon icon="create" /></Link>
-                                        <button class="waves-effect waves-light btn-small red"> <MaterialIcon icon="delete_forever" /></button>
+                                        <button className="waves-effect waves-light btn-small red"> <MaterialIcon icon="delete_forever" /></button>
                                     </td>
                                 </tr>
                             </tbody>

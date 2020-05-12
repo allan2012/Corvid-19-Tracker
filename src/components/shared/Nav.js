@@ -31,7 +31,7 @@ class Nav extends React.Component {
             </ul>
             <nav className="blue darken-4">
                 <div className="nav-wrapper">
-                    <a className='page-title' href="#">{this.props.page_title}</a>
+                    <span className='page-title'>{this.props.page_title}</span>
                     <ul id="nav-mobile" className="right hide-on-med-and-down">
                         <li><a href="sass.html">Help</a></li>
                         <li><a href="badges.html">FAQ</a></li>
@@ -41,8 +41,8 @@ class Nav extends React.Component {
                 </div>
             </nav>
 
-            <div id="modal1" class="modal" style={{width: '400px'}}>
-                <div class="modal-content">
+            <div id="modal1" className="modal" style={{width: '400px'}}>
+                <div className="modal-content">
                     <h5>{localStorage.getItem('names')}</h5>
                     <p>
                         <MaterialIcon icon="email" size="tiny" /> allan.koskei@gmail.com
@@ -58,8 +58,8 @@ class Nav extends React.Component {
                     </p>
                     
                 </div>
-                <div class="modal-footer">
-                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                <div className="modal-footer">
+                    <a href="#!" className="modal-close waves-effect waves-green btn-flat">Close</a>
                 </div>
             </div>
         </header>)

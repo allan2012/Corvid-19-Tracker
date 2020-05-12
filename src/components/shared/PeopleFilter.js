@@ -1,31 +1,37 @@
 import React from "react";
 
-export default function PeopleFilter() {
-    return <form className="col s12">
+const PeopleFilter = (props) => {
+    return <div className="col s12">
         <div className="row">
             <div className="input-field col l2">
                 <i className="material-icons prefix">search</i>
-                <input id="icon_prefix" type="text" className="validate" />
+                <input id="icon_prefix" name="q" onChange={props.handle_change}  type="text" className="validate" />
                 <label htmlFor="icon_prefix">Search</label>
             </div>
             <div className="input-field col l2">
-                <select>
-                    <option value="" disabled selected>Health state</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
+                <select name='health_state' onChange={props.handle_change}>
+                    <option value="">Health state</option>
+                    <option value="CRITICAL">CRITICAL</option>
+                    <option value="DIED">DIED</option>
+                    <option value="STABLE">STABLE</option>
+                    <option value="RECOVERED">RECOVERED</option>
                 </select>
             </div>
             <div className="input-field col l2">
                 <select>
-                    <option value="" disabled selected>Gender</option>
+                    <option value="">Gender</option>
                     <option value="1">Male</option>
                     <option value="2">Female</option>
                 </select>
             </div>
             <div className="input-field col l2">
-                <button className='waves-effect waves-light btn'>Search</button>
+                <button 
+                    onClick={props.search_function} 
+                    className='waves-effect waves-light btn'>Search
+                </button>
             </div>
         </div>
-    </form>
+    </div>
 }
+
+export default PeopleFilter;

@@ -24,9 +24,6 @@ class Quarantined extends React.Component {
         current_page: 1,
     };
 
-    constructor(props) {
-        super(props);
-    }
 
     async getData() {
         this.setState({ loader: true });
@@ -43,7 +40,9 @@ class Quarantined extends React.Component {
                     total: response.data.total,
                     current_page: response.data.current_page
                 });
-            });
+            }).catch(() => {
+
+            })
     }
 
     fetchPage = pointers => {
@@ -70,13 +69,11 @@ class Quarantined extends React.Component {
 
     render() {
         let { page_loaded } = this.state;
-        let items = this.state.members.map((item, key) =>
+        let items = this.state.members.map(item =>
             <TableRow
+                key={item.id}
                 column_values={[
-                    `
-                    ${item.first_name} 
-                    ${item.surname} 
-                    ${item.last_name}`,
+                    `${item.first_name}  ${item.surname}  ${item.last_name}`,
                     item.sex,
                     item.phone,
                     item.national_id,

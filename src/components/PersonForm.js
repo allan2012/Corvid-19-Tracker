@@ -1,5 +1,4 @@
 import React from 'react';
-import { useParams } from "react-router-dom";
 import axios from 'axios';
 import Nav from "./shared/Nav";
 import Loader from "./shared/Loader";
@@ -24,10 +23,6 @@ class PersonForm extends React.Component {
         confirmed_corvid: 0,
         page_loaded: false,
     };
-
-    constructor(props) {
-        super(props);
-    }
 
     async getPersonData() {
         const { id } = this.props.match.params;
@@ -93,8 +88,6 @@ class PersonForm extends React.Component {
     }
 
     render() {
-
-        console.log(this.state)
         let { page_loaded } = this.state;
 
         if (page_loaded === false) {
