@@ -5,8 +5,6 @@ class NoMatch extends React.Component {
 
     render() {
         return (
-            <div>
-                <Nav />
                 <div className="container">
                     <div className="row">
                         <div className="col l12 center">
@@ -15,7 +13,6 @@ class NoMatch extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
         )
     }
 

@@ -1,7 +1,7 @@
 body {
-  font-weight: 300 !important;
-  font-family: 'Lato';
-  color: #616161;
+  font-weight: 400 !important;
+  font-family: 'Roboto';
+  color: #333;
   font-size: 16px !important;
 }
 
@@ -87,9 +87,4 @@ tr td {
 
 .standard-custom-header { 
   padding: 10px !important;
-}
-
-h1 h2 h3 h4 h5 h6 { 
-  font-family: 'Kanit' !important;
-  font-weight: 500;
 }

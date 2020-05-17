@@ -4,13 +4,16 @@ import Loader from "./shared/Loader";
 import '../Login.css';
 import M from 'materialize-css';
 import jwt_decode from 'jwt-decode';
+import { Button } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 class Login extends React.Component {
 
     state = {
         email: '',
         password: '',
-        loading: false
+        loading: false,
+        error: ''
     };
 
     handleChange = (event) => {
@@ -22,8 +25,8 @@ class Login extends React.Component {
     authenticate = (event) => {
         event.preventDefault();
         this.setState({ loading: true })
-        if (this.state.username === '') {
-            M.toast({ html: 'Invalid username', classes: 'rounded, red' });
+        if (this.state.email === '') {
+            this.setState({ error: 'Invalid email'})
         } else {
             this.auth()
         }
@@ -39,8 +42,7 @@ class Login extends React.Component {
                     localStorage.setItem('refresh_token', response.data.refresh_token)
                     this.props.history.push('/dashboard')
                 } else {
-                    M.toast({ html: 'Login failed. Please try again', classes: 'rounded, red' });
-                    this.setState({ loading: false })
+                    this.setState({ loading: false, error: 'Login failed. Please try again' })
                 }
             }).catch(error => {
                 console.log(error)
@@ -50,6 +52,9 @@ class Login extends React.Component {
     render() {
         let loading = this.state.loading;
         let progress = '';
+        let error = (this.state.error !== '') ? 
+             <Alert severity="error">{this.state.error}</Alert> 
+             : this.state.error;
 
         if (loading === true) {
             progress = <Loader />
@@ -62,8 +67,12 @@ class Login extends React.Component {
                                 <form className="col s12">
                                     < div className="row">
                                         <div className="col s12 center">
-                                            <img src='./virus.png' alt="app logo" className="logo-icon" />
+                                            <img src='./virus.png'
+                                                 alt="app logo"
+                                                 className="logo-icon"
+                                            />
                                             <h5> Corvid - 19Tracker </h5>
+                                            {error}
                                         </div>
                                         <div className="input-field col s12">
                                             <input name="email"
@@ -81,8 +90,10 @@ class Login extends React.Component {
                                     </div>
                                     <div className="row">
                                         <div className="col s12">
-                                            <button className="waves-effect waves-light btn blue darken-4"
-                                                onClick={this.authenticate}>Login</button>
+                                            <Button 
+                                                onClick={this.authenticate} 
+                                                variant="contained" 
+                                                color="primary">Login</Button>
                                         </div>
                                     </div>
                                 </form>

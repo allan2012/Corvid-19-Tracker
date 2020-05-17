@@ -85,6 +85,8 @@ class PersonForm extends React.Component {
         this.setState({
             page_loaded: true
         });
+        M.AutoInit();
+
     }
 
     render() {
@@ -95,7 +97,6 @@ class PersonForm extends React.Component {
         }
 
         return <div>
-            <Nav page_title={`Person ID: ${this.state.id}`} />
             <main>
                 <div className="row container content">
                     <div className="col l12">

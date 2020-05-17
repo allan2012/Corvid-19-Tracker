@@ -1,16 +1,22 @@
 import React from 'react';
 import axios from 'axios';
-import Loader from "./shared/Loader";
-import Nav from "./shared/Nav";
+import Loader from "./shared/Loader"
 import PeopleFilter from "./shared/PeopleFilter";
 import Paginator from "./shared/Paginator";
 import FloatingButton from "./shared/FloatingButton";
-import TableHeader from './shared/TableHeader';
-import TableRow from './shared/TableRow';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import MaterialIcon from './shared/MaterialIcon';
-import { Link } from "react-router-dom"
+import {Link} from "react-router-dom"
+import {AppContext} from './AppContext'
 
 class Quarantined extends React.Component {
+
+    static contextType = AppContext;
+
     state = {
         members: [],
         first_page_url: null,
@@ -26,9 +32,9 @@ class Quarantined extends React.Component {
 
 
     async getData() {
-        this.setState({ loader: true });
+        this.setState({loader: true});
         await axios.get(this.state.path,
-            { headers: { Authorization: "Bearer " + localStorage.getItem('token') } })
+            {headers: {Authorization: "Bearer " + localStorage.getItem('token')}})
             .then(response => {
                 this.setState({
                     members: response.data.data,
@@ -60,6 +66,7 @@ class Quarantined extends React.Component {
     }
 
     async componentDidMount() {
+        this.context.updateAppBarTitle('Quarantined Citizens')
         await this.getData();
         this.setState({
             page_loaded: true
@@ -68,40 +75,58 @@ class Quarantined extends React.Component {
 
 
     render() {
-        let { page_loaded } = this.state;
+        let {page_loaded} = this.state;
         let items = this.state.members.map(item =>
             <TableRow
                 key={item.id}
-                column_values={[
-                    `${item.first_name}  ${item.surname}  ${item.last_name}`,
-                    item.sex,
-                    item.phone,
-                    item.national_id,
-                    item.occupation,
-                    item.date_of_birth,
-                    item.current_corvid_state,
+            >
+                <TableCell>{`${item.first_name}  
+                ${item.surname}  
+                ${item.last_name}`}</TableCell>
+                <TableCell>{(item.sex === 'M') ? 'Male' : 'Female'}</TableCell>
+                <TableCell>{item.phone}</TableCell>
+                <TableCell>{item.national_id}</TableCell>
+                <TableCell>{item.occupation}</TableCell>
+                <TableCell>{item.date_of_birth}</TableCell>
+                <TableCell>{item.current_corvid_state}</TableCell>
+                <TableCell>
                     <Link
                         to={`/person/${item.id}`}
                         className="waves-effect waves-teal btn-flat">
-                        <MaterialIcon icon="remove_red_eye" />
+                        <MaterialIcon icon="remove_red_eye"/>
                     </Link>
-                ]}
-            />
+                </TableCell>
+            </TableRow>
         );
 
         if (page_loaded === false) {
-            return <Loader />
+            return <Loader/>
         }
 
         return <div>
-            <Nav page_title='Quarantined Citizens' />
             <main>
                 <div className="row">
-                    <PeopleFilter />
+                    <PeopleFilter/>
                 </div>
                 <div className="row">
                     <div className="col l12">
-                        <TableGrid items={items} />
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Name</TableCell>
+                                    <TableCell>Sex</TableCell>
+                                    <TableCell>Phone</TableCell>
+                                    <TableCell>ID/Passport</TableCell>
+                                    <TableCell>Occupation</TableCell>
+                                    <TableCell>Date Of Birth</TableCell>
+                                    <TableCell>Health Status</TableCell>
+                                    <TableCell/>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {items}
+                            </TableBody>
+                        </Table>
                         <Paginator
                             fetchPage={this.fetchPage}
                             current_page={this.state.current_page}
@@ -109,28 +134,9 @@ class Quarantined extends React.Component {
                     </div>
                 </div>
             </main>
-            <FloatingButton />
+            <FloatingButton/>
         </div>
     }
-}
-
-const TableGrid = (props) => {
-    return <table className="highlight">
-        <TableHeader
-            column_titles={[
-                'Name', 'Sex',
-                'Phone',
-                'ID/Passport',
-                'Occupation',
-                'Date of Birth',
-                'Health State',
-                ''
-            ]}
-        />
-        <tbody>
-            {props.items}
-        </tbody>
-    </table>
 }
 
 export default Quarantined;

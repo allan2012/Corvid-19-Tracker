@@ -1,13 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import Loader from "./shared/Loader";
-import Nav from "./shared/Nav";
-import PeopleFilter from "./shared/PeopleFilter";
 import Paginator from "./shared/Paginator";
 import FloatingButton from "./shared/FloatingButton";
 import MaterialIcon from './shared/MaterialIcon';
-import TableHeader from './shared/TableHeader';
-import TableRow from './shared/TableRow';
+import TableRow from "@material-ui/core/TableRow";
+import Table from "@material-ui/core/Table";
+import TableHead from "@material-ui/core/TableHead";
+import TableCell from "@material-ui/core/TableCell";
+import TableBody from "@material-ui/core/TableBody";
 import { Link } from "react-router-dom";
 
 class Centers extends React.Component {
@@ -72,17 +73,17 @@ class Centers extends React.Component {
     render() {
         let { page_loaded, data } = this.state
         let items = data.map((item, key) =>
-            <TableRow
-                column_values={[
-                    item.name,
-                    item.location,
+            <TableRow key={item.id}>
+                <TableCell>{item.name}</TableCell>
+                <TableCell>{item.location}</TableCell>
+                <TableCell>
                     <Link
                         to={`/center/${item.id}`}
                         className="waves-effect waves-teal btn-flat">
                         <MaterialIcon icon="remove_red_eye" />
                     </Link>
-                ]}
-            />
+                </TableCell>
+            </TableRow>
         );
 
         if (page_loaded === false) {
@@ -90,14 +91,19 @@ class Centers extends React.Component {
         }
 
         return <div>
-            <Nav page_title='Approved Qurantine Centers' />
             <main>
                 <div className="row">
-                    <PeopleFilter />
-                </div>
-                <div className="row">
                     <div className="col l5">
-                        <TableGrid items={items} />
+                        <Table>
+                            <TableHead>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Location</TableCell>
+                                <TableCell />
+                            </TableHead>
+                            <TableBody>
+                                {items}
+                            </TableBody>
+                        </Table>
                         <Paginator
                             fetchPage={this.fetchPage}
                             current_page={this.state.current_page}
@@ -108,21 +114,6 @@ class Centers extends React.Component {
             <FloatingButton />
         </div>
     }
-}
-
-const TableGrid = (props) => {
-    return <table>
-        <TableHeader
-            column_titles={[
-                'Name',
-                'Location',
-                ''
-            ]}
-        />
-        <tbody>
-            {props.items}
-        </tbody>
-    </table>
 }
 
 export default Centers;

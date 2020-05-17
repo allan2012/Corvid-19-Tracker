@@ -29,18 +29,18 @@ class Nav extends React.Component {
                 <li className="divider"></li>
                 <li><Link to="/logout"><i className="material-icons">exit_to_app</i> Logout</Link></li>
             </ul>
-            <nav className="blue darken-4">
-                <div className="nav-wrapper">
-                    <span className='page-title'>{this.props.page_title}</span>
-                    <ul id="nav-mobile" className="right hide-on-med-and-down">
-                        <li><a href="sass.html">Help</a></li>
-                        <li><a href="badges.html">FAQ</a></li>
-                        <li><a className="dropdown-trigger" href="#!" data-target="dropdown1">Welcome {localStorage.getItem('names')}<i
-                            className="material-icons right">arrow_drop_down</i></a></li>
-                    </ul>
-                </div>
-            </nav>
 
+                <nav className="blue darken-4">
+                    <div className="nav-wrapper">
+                        <span className='page-title'>{this.props.page_title}</span>
+                        <ul id="nav-mobile" className="right hide-on-med-and-down">
+                            <li><a href="sass.html">Help</a></li>
+                            <li><a href="badges.html">FAQ</a></li>
+                            <li><a className="dropdown-trigger" href="#!" data-target="dropdown1">Welcome {localStorage.getItem('names')}<i
+                                className="material-icons right">arrow_drop_down</i></a></li>
+                        </ul>
+                    </div>
+                </nav>
             <div id="modal1" className="modal" style={{width: '400px'}}>
                 <div className="modal-content">
                     <h5>{localStorage.getItem('names')}</h5>

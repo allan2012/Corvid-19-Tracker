@@ -1,9 +1,9 @@
 import React from 'react';
-import Nav from "./shared/Nav";
 import axios from 'axios';
 import isAuthenticated from './shared/Auth'
 import Loader from "./shared/Loader";
 import { XYPlot, LineSeries, XAxis, YAxis } from 'react-vis';
+import {AppContext} from './AppContext'
 
 class Dashboard extends React.Component {
 
@@ -12,6 +12,8 @@ class Dashboard extends React.Component {
         page_loaded: false
     };
 
+    static contextType = AppContext;
+
     render() {
         let { page_loaded } = this.state;
 
@@ -19,34 +21,17 @@ class Dashboard extends React.Component {
             return <Loader />
         }
 
-        const data_ = [
-            { x: 20, y: 9 },
-            { x: 21, y: 5 },
-            { x: 22, y: 10 },
-            { x: 23, y: 44 },
-            { x: 24, y: 56 },
-            { x: 25, y: 23 },
-            { x: 26, y: 22 },
-            { x: 27, y: 3 },
-            { x: 28, y: 2 },
-            { x: 29, y: 0 },
-            { x: 30, y: 44 },
-            { x: 31, y: 12 }
-        ];
-
-        return (<div>
-            <Nav page_title='Dashboard' />
-            <main>
+        return (<AppContext.Consumer> 
+            {value => <main>
                 <div className="row content">
                     <div className="col l12">
-                        <h5 className='standard-custom-header'>Infection trend last 30 Days</h5>
-                        <XYPlot
-                            height={300}
-                            width={1000}>
-                            <XAxis />
-                            <YAxis />
-                            <LineSeries data={data_} />
-                        </XYPlot>
+						<h5>Curated Corvid-19 Data</h5>
+                        <iframe 
+                            frameBorder="0"  
+                            src="https://ourworldindata.org/grapher/total-cases-covid-19?tab=map" 
+                            width="100%" 
+                            height="500px" 
+                            />
                     </div>
                     <div className="col l12 content dashboard-summary">
                         <div className="col l4 content">
@@ -85,7 +70,9 @@ class Dashboard extends React.Component {
                     </div>
                 </div>
             </main>
-        </div>)
+            }
+        </AppContext.Consumer>
+        )
     }
 
     refreshData = () => {
@@ -111,6 +98,8 @@ class Dashboard extends React.Component {
         if (false === isAuthenticated()) {
             this.props.history.push('/')
         }
+
+        this.context.updateAppBarTitle('Dashboard')
         await this.fetchData();
         this.setState({
             page_loaded: true
