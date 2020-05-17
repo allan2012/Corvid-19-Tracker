@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Dashboard from './components/Dashboard';
 import Login from "./components/Login";
 import Logout from "./components/Logout";
@@ -11,23 +11,43 @@ import PersonForm from "./components/PersonForm"
 import Centers from "./components/Centers"
 import Nav from "./components/shared/Nav";
 import {AppContext} from "./components/AppContext"
+import axios from 'axios';
 
 
 class App extends React.Component {
 
 	constructor(props) {
+
 		super(props);
 
 		this.updateAppBarTitle = (title) => {
 			this.setState({
-				appBarTitle: title,
+				...this.state, appBarTitle: title,
 			})
 		}
 
 		this.state = {
 			appBarTitle: 'Corvid Tracker',
-			updateAppBarTitle: this.updateAppBarTitle
+			updateAppBarTitle: this.updateAppBarTitle,
+			counties: []
 		}
+	}
+
+	async fetchCounties() {
+		await axios.get(`${process.env.REACT_APP_API}/api/counties`, {
+			headers: {
+				Authorization:
+					"Bearer " + localStorage.getItem('token')
+			}
+		}).then((response) => {
+			this.setState({
+				...this.state, counties: response.data,
+			})
+		});
+	}
+
+	async componentDidMount() {
+		this.fetchCounties();
 	}
 
 	render() {
@@ -36,7 +56,10 @@ class App extends React.Component {
 				<Router>
 					<div>
 						<Switch>
-							<Route exact path='/' component={LoginContainer}/>
+							<Route 
+								exact path='/' 
+								component={LoginContainer}
+								/>
 							<Route component={DefaultContainer}/>
 							<Route component={NoMatchContainer}/>
 						</Switch>

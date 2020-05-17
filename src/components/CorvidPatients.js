@@ -11,11 +11,13 @@ import TableHead from "@material-ui/core/TableHead";
 import MaterialIcon from './shared/MaterialIcon';
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
+import {AppContext} from './AppContext'
+import isAuthenticated from './shared/Auth'
 
 class CorvidPatients extends React.Component
 {
 
-
+	static contextType = AppContext;
 
 	state = {
 		patients: [],
@@ -28,6 +30,7 @@ class CorvidPatients extends React.Component
 		current_page: 1,
 		page_loaded: false,
 		health_state: null,
+		county_id: null,
 		q: null
 	};
 
@@ -38,6 +41,11 @@ class CorvidPatients extends React.Component
 
 		if (this.state.health_state !== null) {
 			query_filter = `&health_state=${this.state.health_state}`;
+			filter = true;
+		}
+
+		if (this.state.county_id !== null) {
+			query_filter = `&county_id=${this.state.county_id}`;
 			filter = true;
 		}
 
@@ -93,6 +101,10 @@ class CorvidPatients extends React.Component
 
 	async componentDidMount() {
 		await this.getData();
+		if (false === isAuthenticated()) {
+            this.props.history.push('/')
+        }
+        this.context.updateAppBarTitle('Confirmed Corvid-19 Patients')
 		this.setState({
 			page_loaded: true
 		})

@@ -10,8 +10,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import MaterialIcon from './shared/MaterialIcon';
-import {Link} from "react-router-dom"
-import {AppContext} from './AppContext'
+import { Link } from "react-router-dom"
+import isAuthenticated from './shared/Auth'
+import { AppContext } from './AppContext'
 
 class Quarantined extends React.Component {
 
@@ -32,11 +33,12 @@ class Quarantined extends React.Component {
 
 
     async getData() {
-        this.setState({loader: true});
+        this.setState({ loader: true });
         await axios.get(this.state.path,
-            {headers: {Authorization: "Bearer " + localStorage.getItem('token')}})
+            { headers: { Authorization: "Bearer " + localStorage.getItem('token') } })
             .then(response => {
                 this.setState({
+                    data: response.data,
                     members: response.data.data,
                     loader: false,
                     first_page_url: response.data.first_page_url,
@@ -46,6 +48,7 @@ class Quarantined extends React.Component {
                     total: response.data.total,
                     current_page: response.data.current_page
                 });
+
             }).catch(() => {
 
             })
@@ -65,7 +68,11 @@ class Quarantined extends React.Component {
         }
     }
 
-    async componentDidMount() {
+    async componentDidMount() 
+    {
+        if (false === isAuthenticated()) {
+            this.props.history.push('/')
+        }
         this.context.updateAppBarTitle('Quarantined Citizens')
         await this.getData();
         this.setState({
@@ -73,9 +80,8 @@ class Quarantined extends React.Component {
         }, this.getData);
     }
 
-
     render() {
-        let {page_loaded} = this.state;
+        let { page_loaded } = this.state;
         let items = this.state.members.map(item =>
             <TableRow
                 key={item.id}
@@ -93,20 +99,20 @@ class Quarantined extends React.Component {
                     <Link
                         to={`/person/${item.id}`}
                         className="waves-effect waves-teal btn-flat">
-                        <MaterialIcon icon="remove_red_eye"/>
+                        <MaterialIcon icon="remove_red_eye" />
                     </Link>
                 </TableCell>
             </TableRow>
         );
 
         if (page_loaded === false) {
-            return <Loader/>
+            return <Loader />
         }
 
         return <div>
             <main>
                 <div className="row">
-                    <PeopleFilter/>
+                    <PeopleFilter />
                 </div>
                 <div className="row">
                     <div className="col l12">
@@ -120,7 +126,7 @@ class Quarantined extends React.Component {
                                     <TableCell>Occupation</TableCell>
                                     <TableCell>Date Of Birth</TableCell>
                                     <TableCell>Health Status</TableCell>
-                                    <TableCell/>
+                                    <TableCell />
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -134,8 +140,9 @@ class Quarantined extends React.Component {
                     </div>
                 </div>
             </main>
-            <FloatingButton/>
+            <FloatingButton />
         </div>
+
     }
 }
 

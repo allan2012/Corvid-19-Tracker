@@ -21,6 +21,7 @@ class Dashboard extends React.Component {
             return <Loader />
         }
 
+
         return (<AppContext.Consumer> 
             {value => <main>
                 <div className="row content">

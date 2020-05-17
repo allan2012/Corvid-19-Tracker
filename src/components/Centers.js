@@ -10,6 +10,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import { Link } from "react-router-dom";
+import isAuthenticated from './shared/Auth'
 
 class Centers extends React.Component {
     state = {
@@ -63,6 +64,9 @@ class Centers extends React.Component {
     }
 
     async componentDidMount() {
+        if (false === isAuthenticated()) {
+            this.props.history.push('/')
+        }
         await this.getData();
         this.setState({
             page_loaded: true

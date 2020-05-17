@@ -1,10 +1,13 @@
 import React from 'react';
 import axios from 'axios';
-import Nav from "./shared/Nav";
 import Loader from "./shared/Loader";
 import M from 'materialize-css';
+import isAuthenticated from './shared/Auth'
+import { AppContext } from './AppContext'
 
 class PersonForm extends React.Component {
+
+    static contextType = AppContext;
 
     state = {
         first_name: '',
@@ -12,6 +15,7 @@ class PersonForm extends React.Component {
         last_name: '',
         sex: 'M',
         phone: '',
+        county_id: '',
         email: '',
         date_of_birth: '',
         notes: '',
@@ -40,6 +44,7 @@ class PersonForm extends React.Component {
                     physical_address: person.physical_address,
                     date_of_birth: person.date_of_birth,
                     email: person.email,
+                    county_id: person.county_id,
                     phone: person.phone,
                     notes: person.notes,
                     contact_names: person.contact_names,
@@ -56,7 +61,6 @@ class PersonForm extends React.Component {
             [event.target.name]: event.target.value
         })
     }
-
 
     savePersonData = () => {
         this.save()
@@ -81,6 +85,10 @@ class PersonForm extends React.Component {
     }
 
     async componentDidMount() {
+        if (false === isAuthenticated()) {
+            this.props.history.push('/')
+        }
+        this.context.updateAppBarTitle(`Person Update Form`);
         await this.getPersonData();
         this.setState({
             page_loaded: true
@@ -92,6 +100,17 @@ class PersonForm extends React.Component {
     render() {
         let { page_loaded } = this.state;
 
+        let counties = this.context.counties;
+
+
+        let items = counties.map(item => (
+            <option
+                value={item.id}
+                selected={item.id === this.state.county_id}>{item.name}
+            </option>
+        ))
+
+
         if (page_loaded === false) {
             return <Loader />
         }
@@ -100,7 +119,7 @@ class PersonForm extends React.Component {
             <main>
                 <div className="row container content">
                     <div className="col l12">
-                        <h5>{this.state.first_name} {this.state.surname}</h5>
+                        <h4>{this.state.first_name} {this.state.surname}</h4>
                     </div>
                     <div className="col l6">
                         <table className='custom_table'>
@@ -168,9 +187,23 @@ class PersonForm extends React.Component {
                                 </td>
                             </tr>
                             <tr>
+                                <td>County</td>
+                                <td>
+                                    <select
+                                        className='browser-default'
+                                        name='county_id'
+                                        onChange={this.handleChange}
+                                    >
+                                        <option>Select County</option>
+                                        {items}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>Gender</td>
                                 <td>
                                     <select
+                                        className='browser-default'
                                         name='sex'
                                         onChange={this.handleChange}
                                     >
@@ -199,6 +232,7 @@ class PersonForm extends React.Component {
                                 <td>Confirmed Corvid-19 Infection</td>
                                 <td>
                                     <select
+                                        className='browser-default'
                                         name='confirmed_corvid'
                                         onChange={this.handleChange}
                                     >
@@ -269,13 +303,17 @@ class PersonForm extends React.Component {
                             <tr>
                                 <td>Notes</td>
                                 <td>
-                                    <textarea
-                                        class="materialize-textarea"
-                                        name="notes"
-                                        onChange={this.handleChange}
-                                    >
-                                        {this.state.notes}
-                                    </textarea>
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <textarea
+                                                name="notes"
+                                                className='materialize-textarea'
+                                                onChange={this.handleChange}
+                                            >
+                                                {this.state.notes}
+                                            </textarea>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </table>

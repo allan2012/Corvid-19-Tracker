@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import axios from 'axios';
 import Loader from "./shared/Loader";
 import MaterialIcon from "./shared/MaterialIcon"
+import isAuthenticated from './shared/Auth'
 
 class Person extends React.Component {
 
@@ -23,6 +24,9 @@ class Person extends React.Component {
     }
 
     async componentDidMount() {
+        if (false === isAuthenticated()) {
+            this.props.history.push('/')
+        }
         await this.getPersonData();
         this.setState({
             page_loaded: true

@@ -1,5 +1,4 @@
 import React from 'react';
-import Nav from "./shared/Nav";
 
 class NoMatch extends React.Component {
 
