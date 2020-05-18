@@ -90,8 +90,8 @@ class Quarantined extends React.Component {
                 ${item.surname}  
                 ${item.last_name}`}</TableCell>
                 <TableCell>{(item.sex === 'M') ? 'Male' : 'Female'}</TableCell>
-                <TableCell>{item.phone}</TableCell>
-                <TableCell>{item.national_id}</TableCell>
+                <TableCell>2547########</TableCell>
+                <TableCell>########</TableCell>
                 <TableCell>{item.occupation}</TableCell>
                 <TableCell>{item.date_of_birth}</TableCell>
                 <TableCell>{item.current_corvid_state}</TableCell>
