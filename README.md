@@ -1,5 +1,22 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Screen-shots
+
+### Login
+![Alt text](public/screenshots/Capture.png?raw=true "Login")
+
+### Dashboard
+![Alt text](public/screenshots/dashboard.png?raw=true "Dashboard")
+
+### Quarantine
+![Alt text](public/screenshots/quarantine.png?raw=true "Quarantine")
+
+### Curated World Reports
+![Alt text](public/screenshots/REPORTS.png?raw=true "Quarantine")
+
+### People Form
+![Alt text](public/screenshots/FORM.png?raw=true "Quarantine")
+
 ## Available Scripts
 
 In the project directory, you can run:
