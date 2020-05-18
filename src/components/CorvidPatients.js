@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Loader from "./shared/Loader";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import PeopleFilter from "./shared/PeopleFilter";
 import Paginator from "./shared/Paginator";
 import FloatingButton from "./shared/FloatingButton";
@@ -11,11 +11,10 @@ import TableHead from "@material-ui/core/TableHead";
 import MaterialIcon from './shared/MaterialIcon';
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-import {AppContext} from './AppContext'
+import { AppContext } from './AppContext'
 import isAuthenticated from './shared/Auth'
 
-class CorvidPatients extends React.Component
-{
+class CorvidPatients extends React.Component {
 
 	static contextType = AppContext;
 
@@ -35,7 +34,7 @@ class CorvidPatients extends React.Component
 	};
 
 	async getData() {
-		this.setState({loader: true});
+		this.setState({ loader: true });
 		let query_filter = '';
 		let filter = false;
 
@@ -102,16 +101,16 @@ class CorvidPatients extends React.Component
 	async componentDidMount() {
 		await this.getData();
 		if (false === isAuthenticated()) {
-            this.props.history.push('/')
-        }
-        this.context.updateAppBarTitle('Confirmed Corvid-19 Patients')
+			this.props.history.push('/')
+		}
+		this.context.updateAppBarTitle('Confirmed Corvid-19 Patients')
 		this.setState({
 			page_loaded: true
 		})
 	}
 
 	render() {
-		let {patients, page_loaded} = this.state;
+		let { patients, page_loaded } = this.state;
 		let items = patients.map((item, key) =>
 			<TableRow key={item.id}>
 				<TableCell>
@@ -129,14 +128,14 @@ class CorvidPatients extends React.Component
 					<Link
 						to={`/person/${item.id}`}
 						className="waves-effect waves-teal btn-flat">
-						<MaterialIcon icon="remove_red_eye"/>
+						<MaterialIcon icon="remove_red_eye" />
 					</Link>
 				</TableCell>
 			</TableRow>
 		);
 
 		if (page_loaded === false) {
-			return <Loader/>
+			return <Loader />
 		}
 
 		return <div>
@@ -158,7 +157,7 @@ class CorvidPatients extends React.Component
 								<TableCell>Occupation</TableCell>
 								<TableCell>Date Of Birth</TableCell>
 								<TableCell>Health Status</TableCell>
-								<TableCell/>
+								<TableCell />
 							</TableHead>
 							<TableBody>
 								{items}
@@ -171,7 +170,7 @@ class CorvidPatients extends React.Component
 					</div>
 				</div>
 			</main>
-			<FloatingButton/>
+			<FloatingButton />
 		</div>
 	}
 }

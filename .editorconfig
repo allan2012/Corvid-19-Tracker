@@ -21,7 +21,6 @@ indent_size = 4
 # 4 space indentation
 [*.js]
 indent_style = tab
-indent_size = 4
 
 [*.css]
 indent_style = tab

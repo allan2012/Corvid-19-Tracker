@@ -2,7 +2,7 @@ import React from 'react';
 import Dashboard from './components/Dashboard';
 import Login from "./components/Login";
 import Logout from "./components/Logout";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CorvidPatients from "./components/CorvidPatients";
 import Quarantined from "./components/Quarantined";
 import NoMatch from "./components/NoMatch";
@@ -11,7 +11,7 @@ import Reports from "./components/Reports";
 import PersonForm from "./components/PersonForm"
 import Centers from "./components/Centers"
 import Nav from "./components/shared/Nav";
-import {AppContext} from "./components/AppContext"
+import { AppContext } from "./components/AppContext"
 import axios from 'axios';
 
 
@@ -57,12 +57,12 @@ class App extends React.Component {
 				<Router>
 					<div>
 						<Switch>
-							<Route 
-								exact path='/' 
+							<Route
+								exact path='/'
 								component={LoginContainer}
-								/>
-							<Route component={DefaultContainer}/>
-							<Route component={NoMatchContainer}/>
+							/>
+							<Route component={DefaultContainer} />
+							<Route component={NoMatchContainer} />
 						</Switch>
 					</div>
 				</Router>
@@ -74,14 +74,14 @@ class App extends React.Component {
 
 const LoginContainer = () => (
 	<div>
-		<Route path="/" component={Login} exact/>
+		<Route path="/" component={Login} exact />
 	</div>
 )
 
 const NoMatchContainer = () => (
 	<div>
 		<Route path="*">
-			<NoMatch/>
+			<NoMatch />
 		</Route>
 	</div>
 )
@@ -90,15 +90,15 @@ const DefaultContainer = () => (
 	<AppContext.Consumer>
 		{value => <div>
 			<Nav page_title={value.appBarTitle} />
-			<Route path="/dashboard" component={Dashboard}/>
-			<Route path="/corvid-patients" component={CorvidPatients} exact/>
-			<Route path="/quarantined" component={Quarantined} exact/>
-			<Route path="/centers" component={Centers} exact/>
-			<Route path="/reports" component={Reports} exact/>
-			<Route path="/logout" component={Logout} exact/>
-			<Route path="/person/:id" component={Person} exact/>
-			<Route path="/person-form/:id" component={PersonForm} exact/>
-		</div> }
+			<Route path="/dashboard" component={Dashboard} />
+			<Route path="/corvid-patients" component={CorvidPatients} exact />
+			<Route path="/quarantined" component={Quarantined} exact />
+			<Route path="/centers" component={Centers} exact />
+			<Route path="/reports" component={Reports} exact />
+			<Route path="/logout" component={Logout} exact />
+			<Route path="/person/:id" component={Person} exact />
+			<Route path="/person-form/:id" component={PersonForm} exact />
+		</div>}
 	</AppContext.Consumer>
 )
 

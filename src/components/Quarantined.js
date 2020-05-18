@@ -68,8 +68,7 @@ class Quarantined extends React.Component {
         }
     }
 
-    async componentDidMount() 
-    {
+    async componentDidMount() {
         if (false === isAuthenticated()) {
             this.props.history.push('/')
         }
