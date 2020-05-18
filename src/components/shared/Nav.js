@@ -20,7 +20,7 @@ class Nav extends React.Component {
                 <li><Link to="/quarantined"><i className="material-icons">portrait</i>Quarantined</Link></li>
                 <li><Link to="/centers"><i className="material-icons">apartment</i>Centers</Link></li>
                 <li><a href="#!"><i className="material-icons">people</i>System Users</a></li>
-                <li><a href="#!"><i className="material-icons">folder_open</i>Reports</a></li>
+                <li><Link to="/reports"><i className="material-icons">folder_open</i>Reports</Link></li>
             </ul>
             <ul id="dropdown1" className="dropdown-content">
                 <li><a href="#modal1" className="modal-trigger">

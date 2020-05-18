@@ -7,6 +7,7 @@ import CorvidPatients from "./components/CorvidPatients";
 import Quarantined from "./components/Quarantined";
 import NoMatch from "./components/NoMatch";
 import Person from "./components/Person";
+import Reports from "./components/Reports";
 import PersonForm from "./components/PersonForm"
 import Centers from "./components/Centers"
 import Nav from "./components/shared/Nav";
@@ -93,6 +94,7 @@ const DefaultContainer = () => (
 			<Route path="/corvid-patients" component={CorvidPatients} exact/>
 			<Route path="/quarantined" component={Quarantined} exact/>
 			<Route path="/centers" component={Centers} exact/>
+			<Route path="/reports" component={Reports} exact/>
 			<Route path="/logout" component={Logout} exact/>
 			<Route path="/person/:id" component={Person} exact/>
 			<Route path="/person-form/:id" component={PersonForm} exact/>

@@ -22,8 +22,7 @@ class Dashboard extends React.Component {
         }
 
 
-        return (<AppContext.Consumer> 
-            {value => <main>
+        return (<main>
                 <div className="row content">
                     <div className="col l12">
 						<h5>Curated Corvid-19 Data</h5>
@@ -71,8 +70,6 @@ class Dashboard extends React.Component {
                     </div>
                 </div>
             </main>
-            }
-        </AppContext.Consumer>
         )
     }
 
