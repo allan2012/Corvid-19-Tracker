@@ -3,19 +3,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Screen-shots
 
 ### Login
-![Alt text](public/screenshots/Capture.png?raw=true "Login")
+![Alt text](public/screenshots/Capture.PNG?raw=true "Login")
 
 ### Dashboard
-![Alt text](public/screenshots/dashboard.png?raw=true "Dashboard")
+![Alt text](public/screenshots/dashboard.PNG?raw=true "Dashboard")
 
 ### Quarantine
-![Alt text](public/screenshots/quarantine.png?raw=true "Quarantine")
+![Alt text](public/screenshots/quarantine.PNG?raw=true "Quarantine")
 
 ### Curated World Reports
-![Alt text](public/screenshots/REPORTS.png?raw=true "Quarantine")
+![Alt text](public/screenshots/REPORTS.PNG?raw=true "Quarantine")
 
 ### People Form
-![Alt text](public/screenshots/FORM.png?raw=true "Quarantine")
+![Alt text](public/screenshots/FORM.PNG?raw=true "Quarantine")
 
 ## Available Scripts
 
